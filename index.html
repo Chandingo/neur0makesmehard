@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Neuro Midterm 1 Mocks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+:root{--bg:#eef2f5;--surface:#fff;--ink:#15202b;--muted:#5a6976;--line:#d3dce3;--accent:#1d5f8a;--accent-soft:#dfebf4;--ok:#21764a}
+@media (prefers-color-scheme:dark){:root{--bg:#0e141a;--surface:#151e27;--ink:#e3e9ee;--muted:#93a2ae;--line:#283541;--accent:#6db3df;--accent-soft:#183245;--ok:#5ec48b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:40px 16px 56px}
+h1{font:600 30px/1.2 "Source Serif 4",Georgia,serif;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 28px}
+.list{display:grid;gap:12px}
+a.card{display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;color:inherit;text-decoration:none}
+a.card:hover{border-color:var(--accent)}
+.num{flex:none;width:44px;height:44px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font:500 18px "IBM Plex Mono",monospace}
+.card b{display:block;font-size:16.5px}
+.card span{color:var(--muted);font-size:13.5px}
+.status{margin-left:auto;font:500 12.5px "IBM Plex Mono",monospace;color:var(--muted);white-space:nowrap}
+.status.done{color:var(--ok)}
+.how{margin-top:28px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-size:14px}
+.how h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;font-weight:500}
+.how ul{margin:0;padding-left:18px;display:grid;gap:4px}
+</style>
+</head>
+<body>
+<main>
+  <h1>Neuro Midterm 1 Mocks</h1>
+  <p class="sub">Four 92-question practice exams covering Weeks 1–3, written by Claude to the Exam 1 blueprint.</p>
+  <div class="list">
+    <a class="card" href="mock1.html"><div class="num">1</div><div><b>Mock #1</b><span>77 session items + 15 lab image items</span></div><div class="status" data-k="1"></div></a>
+    <a class="card" href="mock2.html"><div class="num">2</div><div><b>Mock #2</b><span>77 session items + 15 lab image items</span></div><div class="status" data-k="2"></div></a>
+    <a class="card" href="mock3.html"><div class="num">3</div><div><b>Mock #3</b><span>77 session items + 15 lab image items · annotated figures</span></div><div class="status" data-k="3"></div></a>
+    <a class="card" href="mock4.html"><div class="num">4</div><div><b>Mock #4</b><span>77 session items + 15 lab image items · annotated figures</span></div><div class="status" data-k="4"></div></a>
+  </div>
+  <div class="how">
+    <h2>How it works</h2>
+    <ul>
+      <li>Pick <b>Immediate</b> feedback to see the answer after each question, or <b>At end</b> to take it like the real exam.</li>
+      <li>Select stem text to highlight it. Right-click an answer choice to cross it out. Keys A–E answer, ← → move, F flags.</li>
+      <li>Your progress saves in this browser automatically. Come back on the same device and browser to pick up where you left off.</li>
+      <li>Answer keys were written by Claude and checked against the course materials; flag anything that looks wrong.</li>
+    </ul>
+  </div>
+</main>
+<script>
+document.querySelectorAll(".status").forEach(el=>{
+  try{
+    const L = JSON.parse(localStorage.getItem("mock"+el.dataset.k+".local"));
+    if(!L || !L.S) return;
+    const done = Object.values(L.attempts||{}).sort((a,b)=>b.attempt-a.attempt)[0];
+    if(L.S.status==="submitted" && done){ el.textContent = done.score+"/"+done.total; el.classList.add("done"); }
+    else { const n = Object.values(L.allResp||{}).filter(r=>r.attempt===L.S.attempt && r.choice).length; if(n) el.textContent = n+"/92 in progress"; }
+  }catch(e){}
+});
+</script>
+</body>
+</html>
